@@ -1,4 +1,4 @@
-import sys 
+import sys  
 from Bio.Blast import NCBIWWW
 import xml.etree.ElementTree as ET
 import os

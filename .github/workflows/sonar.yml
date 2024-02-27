@@ -60,18 +60,20 @@
 
 
 
-name: SonarQube
+name: Push to main branch
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  run-sonarqube:
+  analyze:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
     - name: SonarQube Scan
-      uses: monstar-lab-oss/sonarqube-github-action@v1.0.1
+      uses: fedecalendino/sonarqube-scanner-trigger@main
       with:
         url: ${{ secrets.SONARQUBE_HOST }}
         token: ${{ secrets.SONARQUBE_TOKEN }}

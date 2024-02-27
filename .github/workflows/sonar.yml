@@ -28,52 +28,32 @@
 
 
 
-# on:
-#   push:
-#     branches:
-#       - main
-
-
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-#       - uses: sonarsource/sonarqube-scan-action@master
-#         env:
-#           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-#           SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-#       # If you wish to fail your job when the Quality Gate is red, uncomment the
-#       # following lines. This would typically be used to fail a deployment.
-#       # - uses: sonarsource/sonarqube-quality-gate-action@master
-#       #   timeout-minutes: 5
-#       #   env:
-#       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
-
-
-
-
-
-
-name: Push to main branch
-
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
 
 jobs:
-  analyze:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-
     steps:
-    - name: SonarQube Scan
-      uses: fedecalendino/sonarqube-scanner-trigger@main
-      with:
-        url: ${{ secrets.SONARQUBE_HOST }}
-        token: ${{ secrets.SONARQUBE_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+
+
+

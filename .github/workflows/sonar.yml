@@ -60,28 +60,18 @@
 
 
 
-on: push
-name: SonarQube Workflow
+name: SonarQube
+
+on:
+  push:
+    branches: [ main ]
+
 jobs:
-  sonarqube:
+  run-sonarqube:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-      with:
-        fetch-depth: 0
-    # Setup java 17 to be default (sonar-scanner requirement as of 5.x)
-    - uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin' # See 'Supported distributions' for available options
-        java-version: '17'
-    # Setup sonar-scanner
-    - name: Setup SonarQube
-      uses: warchant/setup-sonar-scanner@v8
-    # Run sonar-scanner
     - name: SonarQube Scan
-      run: sonar-scanner
-           -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }}
-           -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
-           #-Dsonar.projectKey=test
-           # -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-           # -Dsonar.sources=$GITHUB_WORKSPACE
+      uses: monstar-lab-oss/sonarqube-github-action@v1.0.1
+      with:
+        url: ${{ secrets.SONARQUBE_HOST }}
+        token: ${{ secrets.SONARQUBE_TOKEN }}

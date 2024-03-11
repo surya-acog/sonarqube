@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  pull:
+    runs-on: self-hosted
+
+    steps:
+      - name: pull
+        run: |
+            cd ${{ secrets.PATH }}/${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}
+            git pull
+            sonar-scanner -Dsonar.projectKey=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }} -Dsonar.token=${{ secrets.SONARQUBE_TOKEN }}
